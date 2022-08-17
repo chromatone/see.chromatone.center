@@ -19,5 +19,16 @@ export default defineConfig({
     alias: {
       '#': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
+  build: {
+
+    chunkSizeWarningLimit: 100000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          chromatone: ['chromatone.center']
+        },
+      },
+    },
+  },
 })

@@ -1,7 +1,7 @@
 cd dist
 
 git init
-git remote add origin git@github.com:see.chromatone.center/chromatone.center.git 
+git remote set-url origin git@github.com:chromatone/see.chromatone.center.git 
 git add . --force
 git commit -m 'deploy'
 

@@ -1,0 +1,41 @@
+/** Parameters that describe an arrow. */
+export declare type ArrowDescriptor = [
+/** start point */
+number, number, 
+/** control point for start point */
+number, number, 
+/** control point for end point */
+number, number, 
+/** end point */
+number, number, 
+/** angle of end point */
+number, 
+/** angle of start point */
+number];
+export declare type ArrowOptions = Partial<{
+    padStart: number;
+    padEnd: number;
+}>;
+/**
+ * Get parameters to draw an S-curved line between two boxes.
+ *
+ * @returns [sx, sy, c1x, c1y, c2x, c2y, ex, ey, ae, as]
+ * @example
+ * const arrowHeadSize = 9
+ * const [
+ *  startX, startY,
+ *  controlStartX, controlStartY,
+ *  controlEndX, controlEndY,
+ *  endX, endY,
+ *  endAngle,
+ *  startAngle
+ * ] = getBoxToBoxArrow(0, 0, 100, 100, 200, 200, 200, 100, {
+ *   padStart: 0,
+ *   padEnd: arrowHeadSize, // make room for drawing arrow head
+ * })
+ */
+export default function getBoxToBoxArrow(
+/** start box */
+x0: number, y0: number, w0: number, h0: number, 
+/** end box */
+x1: number, y1: number, w1: number, h1: number, userOptions?: ArrowOptions): ArrowDescriptor;

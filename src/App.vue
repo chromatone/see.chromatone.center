@@ -1,85 +1,39 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { useTuner } from 'chromatone.center'
+import { useFps } from '@vueuse/core'
+const fps = useFps()
+
+const { init, tuner, chain } = useTuner();
+
 </script>
 
-<template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+<template lang="pug">
+header.flex.items-center.w-full.gap-4.absolute
+  a.p-2(href="https://chromatone.center")
+    img.w-8(alt="Vue logo" src="./assets/logo.svg" width="125" height="125")
+  .flex-auto
+  nav.flex.gap-2.p-2.text-xs
+    RouterLink(to="/") CIRCLE
+    RouterLink(to="/square") SQUARE
+.fullscreen-container.rounded-4xl.flex.items-center.justify-center
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  button.p-4.bg-dark-200.absolute(v-if="!tuner.initiated" @click="init()") Start
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
+  .absolute.bottom-2.right-2.tabular-nums {{ fps }}
 
-  <RouterView />
+  svg.max-h-100vh.w-full.h-full.min-h-100vh#stage(
+    version="1.1",
+    baseProfile="full",
+    viewBox="0 0 100 100",
+    xmlns="http://www.w3.org/2000/svg",
+    ref="stage"
+    )
+    RouterView(:tuner="tuner")
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+<style scoped lang="postcss">
+.router-link-active {
+  @apply font-bold;
 }
 </style>

@@ -27,9 +27,9 @@ useDrag(e => {
 <template lang="pug">
 g(ref="stage")
 	defs 
-		filter#blur(x="-1" y="-1" width="3000" height="3000")
+		filter#blur(x="-1" y="-1" width="3" height="3")
 			feGaussianBlur(in="SourceGraphic" :stdDeviation="blur")
-		filter#blur-more(x="-1" y="-1" width="30" height="30")
+		filter#blur-more(x="-1" y="-1" width="3" height="3")
 			feGaussianBlur(in="SourceGraphic" :stdDeviation="blur * 2")
 	circle.note(
 		style="transition: all 300ms ease-in-out;transform-box: fill-box; transform-origin: center center;"

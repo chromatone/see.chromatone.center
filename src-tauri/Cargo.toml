@@ -1,11 +1,11 @@
 [package]
-name = "app"
+name = "see-chromatone"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "See Chromatone"
+authors = ["davay"]
 license = ""
-repository = ""
-default-run = "app"
+repository = "https://github.com/chromatone/see.chromatone.center"
+default-run = "see-chromatone"
 edition = "2021"
 rust-version = "1.57"
 

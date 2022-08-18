@@ -16,6 +16,7 @@ header.flex.items-center.w-full.gap-4.absolute
   nav.flex.gap-2.p-2.text-xs
     RouterLink(to="/") CIRCLE
     RouterLink(to="/square") SQUARE
+    .p-2 {{ midi }}
 .fullscreen-container.rounded-4xl.flex.items-center.justify-center
 
   button.p-4.bg-dark-200.absolute(v-if="!tuner.initiated" @click="init()") Start

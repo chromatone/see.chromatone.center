@@ -1,27 +1,20 @@
 <script setup>
-import { pitchColor, rotateArray, getCircleCoord, notes, useTuner } from 'chromatone.center'
+import { pitchColor, rotateArray, getCircleCoord, notes, useTuner } from 'use-chromatone'
+import { useScene, activeScene } from '#/use/scene';
 
 import { ref, computed } from 'vue'
 import { useClamp } from '@vueuse/math'
 import { useDrag } from '@vueuse/gesture'
+import { tuner, init } from '#/use/tuner'
 
 
-const props = defineProps({
-  tuner: Object
-})
+const { scene, width, height, td, lr, showNotes } = useScene()
+
+
+
 
 const stage = ref()
 
-const blur = useClamp(0, 0, 1)
-const radius = useClamp(2, 1, 3)
-
-useDrag(e => {
-  const { delta: [x, y] } = e
-  blur.value += x / 100
-  radius.value -= y / 100
-}, {
-  domTarget: stage
-})
 
 function getRect(n, w = 100, h = 100) {
   let posX, posY, x, y
@@ -47,52 +40,59 @@ function getRect(n, w = 100, h = 100) {
   }
   return `translate(${posX * w / 4},${posY * h / 4})`
 }
+
+function getAmmount(ammount) {
+  return ammount > tuner.chromaAvg ? tuner.note.silent ? 0 : ammount : 0
+}
+
 </script>
 
 <template lang="pug">
 g(ref="stage")
-  defs 
-    filter#blur(x="-1" y="-1" width="3000" height="3000")
-      feGaussianBlur(in="SourceGraphic" :stdDeviation="blur")
-    filter#blur-more(x="-1" y="-1" width="30" height="30")
-      feGaussianBlur(in="SourceGraphic" :stdDeviation="blur * 2")
   rect(
     style="user-select:none;transition:all 300ms ease"
-    x="25" y="25" width="50" height="50"
+    :x="width / 4" :y="height / 4" :width="width / 2" :height="height / 2"
     :fill="tuner.note.silent ? '#333' : tuner?.note.color"
+    :opacity="tuner.rms * 10"
+    filter="url(#blur-more)"
     )
   text(
+    v-if="showNotes"
     style="user-select:none;transition:all 300ms ease"
     fill="white"
     font-family="Commissioner, sans-serif"
-    font-size="3px"
+    :font-size="height / 20"
     text-anchor="middle",
     dominant-baseline="middle"
-
-    :x="50",
-    :y="50",
+    :opacity="tuner.rms * 10"
+    :x="width / 2",
+    :y="height / 2",
     ) {{ tuner.note.name }} 
   g.around(
     style="cursor:pointer"
-    v-for="(amount, i) in rotateArray(tuner.chroma, -3)", 
+    v-for="(ammount, i) in rotateArray(tuner.chroma, -3)", 
     :key="i",
-    :transform="getRect(i)"
+    :transform="getRect(i, width, height)"
     )
     rect(
       style="user-select:none;transition:all 300ms ease"
-      x="0" y="0" width="25" height="25"
-      :fill="pitchColor(i, 3, amount)"
+      x="0" y="0" :width="width / 4" :height="height / 4"
+      :fill="pitchColor(i, 3, getAmmount(ammount), getAmmount(ammount))"
+      :stroke-width="td * 10" 
+      stroke="black"
+      filter="url(#blur)"
       )
     text(
+      v-if="showNotes"
       style="user-select:none;transition:all 300ms ease"
       :fill="notes[i].length == 2 ? 'hsla(0,0%,0%,0.8)' : 'hsla(0,0%,100%,0.9)'"
       font-family="Commissioner, sans-serif"
-      font-size="3px"
+      :font-size="height / 30"
       text-anchor="middle",
       dominant-baseline="middle"
-      :opacity="amount"
-      x="12.5"
-      y="12.5"
+      :opacity="getAmmount(ammount)"
+      :x="width / 8"
+      :y="height / 8"
       ) {{ notes[i] }}
 </template>
 

@@ -6,8 +6,8 @@ specifiers:
   '@vueuse/core': ^9.1.0
   '@vueuse/gesture': ^2.0.0-beta.1
   '@vueuse/math': ^9.1.0
-  chromatone.center: 1.9.0
   pug: ^3.0.2
+  use-chromatone: 1.9.2
   vite: ^3.0.4
   vite-plugin-windicss: ^1.8.7
   vue: ^3.2.37
@@ -17,7 +17,7 @@ dependencies:
   '@vueuse/core': 9.1.0_vue@3.2.37
   '@vueuse/gesture': 2.0.0-beta.1_vue@3.2.37
   '@vueuse/math': 9.1.0_vue@3.2.37
-  chromatone.center: 1.9.0
+  use-chromatone: 1.9.2
   vue: 3.2.37
   vue-router: 4.1.3_vue@3.2.37
 
@@ -897,52 +897,6 @@ packages:
 
   /chownr/1.1.4:
     resolution: {integrity: sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==}
-    dev: false
-
-  /chromatone.center/1.9.0:
-    resolution: {integrity: sha512-7A25FY1me2E5XXpehabKZLcWubUctmuSBmT7y7WztxRLwz2SLrUszrVnPFydt8I03F9eSGu1msFHehzq2Cemqg==}
-    dependencies:
-      '@gun-vue/composables': 0.11.5
-      '@tonaljs/tonal': 4.6.5
-      '@tonejs/midi': 2.0.28
-      '@vueuse/core': 9.1.0_vue@3.2.37
-      '@vueuse/gesture': 2.0.0-beta.1_vue@3.2.37
-      '@vueuse/math': 9.1.0_vue@3.2.37
-      abcjs: 6.0.4
-      audio-recorder-polyfill: 0.4.1
-      audiomotion-analyzer: 3.6.0
-      cobe: 0.6.0
-      colord: 2.9.3
-      drauu: 0.3.0
-      floating-vue: 2.0.0-y.0_vue@3.2.37
-      fraction.js: 4.2.0
-      fuse.js: 6.6.2
-      hidpi-canvas: 1.0.10
-      meyda: 5.5.1
-      midi-writer-js: 2.1.0
-      ol: 6.15.1
-      paper: 0.12.15
-      recordrtc: 5.6.2
-      simplex-noise: 4.0.0
-      thousands-counter: 2.1.1
-      tone: 14.8.40
-      vitepress-pages: 0.8.5
-      vue: 3.2.37
-      webmidi: 3.0.21
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - async-validator
-      - axios
-      - bufferutil
-      - change-case
-      - focus-trap
-      - jwt-decode
-      - nprogress
-      - qrcode
-      - supports-color
-      - universal-cookie
-      - utf-8-validate
-      - vite-plugin-pages
     dev: false
 
   /cobe/0.6.0:
@@ -2376,6 +2330,52 @@ packages:
     dependencies:
       ip-regex: 4.3.0
       tlds: 1.231.0
+    dev: false
+
+  /use-chromatone/1.9.2:
+    resolution: {integrity: sha512-W7KNyPw3LLl2pAr/YWCrriDdG8uRzi1Kr4+BdXwn8fN9KT6T8k2wuBzapap2Qn1uRfBJhhzDohw8ywtBxvat2g==}
+    dependencies:
+      '@gun-vue/composables': 0.11.5
+      '@tonaljs/tonal': 4.6.5
+      '@tonejs/midi': 2.0.28
+      '@vueuse/core': 9.1.0_vue@3.2.37
+      '@vueuse/gesture': 2.0.0-beta.1_vue@3.2.37
+      '@vueuse/math': 9.1.0_vue@3.2.37
+      abcjs: 6.0.4
+      audio-recorder-polyfill: 0.4.1
+      audiomotion-analyzer: 3.6.0
+      cobe: 0.6.0
+      colord: 2.9.3
+      drauu: 0.3.0
+      floating-vue: 2.0.0-y.0_vue@3.2.37
+      fraction.js: 4.2.0
+      fuse.js: 6.6.2
+      hidpi-canvas: 1.0.10
+      meyda: 5.5.1
+      midi-writer-js: 2.1.0
+      ol: 6.15.1
+      paper: 0.12.15
+      recordrtc: 5.6.2
+      simplex-noise: 4.0.0
+      thousands-counter: 2.1.1
+      tone: 14.8.40
+      vitepress-pages: 0.8.5
+      vue: 3.2.37
+      webmidi: 3.0.21
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - async-validator
+      - axios
+      - bufferutil
+      - change-case
+      - focus-trap
+      - jwt-decode
+      - nprogress
+      - qrcode
+      - supports-color
+      - universal-cookie
+      - utf-8-validate
+      - vite-plugin-pages
     dev: false
 
   /util-deprecate/1.0.2:

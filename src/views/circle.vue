@@ -1,61 +1,51 @@
 <script setup>
-import { pitchColor, rotateArray, getCircleCoord, notes, useTuner } from 'chromatone.center'
+import { pitchColor, rotateArray, getCircleCoord, notes, useTuner } from 'use-chromatone'
 
 import { ref, computed } from 'vue'
 import { useClamp } from '@vueuse/math'
-import { useDrag } from '@vueuse/gesture'
+
+import { tuner, init } from '#/use/tuner'
+import { useScene } from '../use/scene';
 
 
-const props = defineProps({
-	tuner: Object
-})
+const { scene, width, height, td, lr, showNotes } = useScene()
 
-const stage = ref()
 
-const blur = useClamp(0, 0, 1)
-const radius = useClamp(2, 1, 3)
+function getAmmount(ammount) {
+	return ammount > tuner.chromaAvg ? tuner.note.silent ? 0 : ammount : 0
+}
 
-useDrag(e => {
-	const { delta: [x, y] } = e
-	blur.value += x / 100
-	radius.value -= y / 100
-}, {
-	domTarget: stage
-})
 </script>
 
 <template lang="pug">
 g(ref="stage")
-	defs 
-		filter#blur(x="-1" y="-1" width="3" height="3")
-			feGaussianBlur(in="SourceGraphic" :stdDeviation="blur")
-		filter#blur-more(x="-1" y="-1" width="3" height="3")
-			feGaussianBlur(in="SourceGraphic" :stdDeviation="blur * 2")
+
 	circle.note(
 		style="transition: all 300ms ease-in-out;transform-box: fill-box; transform-origin: center center;"
-		:cx="50",
-		:cy="50",
-		:r="10",
-		:style="{ transform: `scale(${0.5 + 20 * tuner.rms})` }"
+		:cx="width / 2",
+		:cy="height / 2",
+		:r="width / 10 + td * width / 4",
+		:style="{ transform: `scale(${0.5 + 5 * tuner.rms})` }"
 		:fill="tuner.note.silent ? '#888' : tuner?.note.color",
+		:opacity="tuner.rms * 10"
 		filter="url(#blur-more)"
 		)
 	text(
+		v-if="showNotes"
 		style="user-select:none;transition:all 300ms ease"
 		fill="white"
 		font-family="Commissioner, sans-serif"
-		font-size="3px"
+		:font-size="height / 20"
 		text-anchor="middle",
+		:opacity="tuner.rms * 10"
 		dominant-baseline="middle"
-
-		:x="50",
-		:y="50",
-		) {{ tuner.note.name }} 
+		:x="width / 2",
+		:y="height / 2",
+		) {{ tuner.note.name }}
 	g.around(
-		style="cursor:pointer"
-		v-for="(amount, i) in rotateArray(tuner.chroma, -3)", 
+		v-for="(ammount, i) in rotateArray(tuner.chroma, -3)", 
 		:key="i",
-		:transform="`translate(${getCircleCoord(i).x},${getCircleCoord(i).y})`"
+		:transform="`translate(${getCircleCoord(i, 12, width / 3, width).x},${getCircleCoord(i, 12, height / 3, height).y})`"
 		)
 		//- circle.note(
 			style="transition: all 300ms ease-in-out;transform-box: fill-box; transform-origin: center center;"
@@ -65,20 +55,21 @@ g(ref="stage")
 			)
 		circle.note(
 			style="transition: all 300ms ease-in-out;transform-box: fill-box; transform-origin: center center;"
-			:r="radius",
-			:style="{ transform: `scale(${0.5 + 10 * amount})` }"
-			:fill="pitchColor(i, 3, amount)",
+			:r="width / 20 + td * width / 10",
+			:style="{ transform: `scale(${0.5 + 2 * getAmmount(ammount)})` }"
+			:fill="pitchColor(i, 3, getAmmount(ammount), getAmmount(ammount))",
 			filter="url(#blur)"
 			)
 		text(
+			v-if="showNotes"
 			style="user-select:none;transition:all 300ms ease"
 			:fill="notes[i].length == 2 ? 'hsla(0,0%,0%,0.8)' : 'hsla(0,0%,100%,0.9)'"
 			font-family="Commissioner, sans-serif"
-			font-size="3px"
+			:font-size="height / 40"
 			text-anchor="middle",
 			dominant-baseline="middle"
-			:opacity="amount"
-			) {{ notes[i] }}
+			:opacity="getAmmount(ammount) * 10"
+			) {{ notes[i] }} 
 </template>
 
 <style lang="postcss" scoped>

@@ -29,7 +29,7 @@
 				"icons/icon.icns",
 				"icons/icon.ico"
 			],
-			"identifier": "see.chromatone.center",
+			"identifier": "center.chromatone.see",
 			"longDescription": "",
 			"macOS": {
 				"entitlements": "",

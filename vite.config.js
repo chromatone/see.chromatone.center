@@ -6,7 +6,8 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(),
+  plugins: [
+  vue(),
   WindiCSS({
     scan: {
       dirs: ['./src'],
@@ -20,8 +21,11 @@ export default defineConfig({
       '#': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  server: {
+    base:"./"
+  },
   build: {
-
+  
     chunkSizeWarningLimit: 100000,
     rollupOptions: {
       output: {
